@@ -5,23 +5,23 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'  # No color
 
-# Define the version of your Caesar cipher program
-CAESAR_VERSION="caesar, version 1.0"
+# Define the version of your Astute cipher program
+Astute_VERSION="Astute, version 1.0"
 
 # Display the welcome message
-echo -e "${GREEN}Welcome to the Caesar cipher program installer!${NC}"
+echo -e "${GREEN}Welcome to the Astute cipher program installer!${NC}"
 
-# Check if Caesar cipher is already installed
-if ! command -v caesar &>/dev/null; then
-    # Caesar cipher is not installed, proceed with installation
-    echo -e "${GREEN}Caesar cipher is not installed. Proceeding with installation...${NC}"
+# Check if Astute cipher is already installed
+if ! command -v Astute &>/dev/null; then
+    # Astute cipher is not installed, proceed with installation
+    echo -e "${GREEN}Astute cipher is not installed. Proceeding with installation...${NC}"
 else
-    INSTALLED_VERSION=$(caesar --version) 2>/dev/null 
-    if [[ "$INSTALLED_VERSION" != "$CAESAR_VERSION" ]] || [[ "$1" == "--force" ]]; then
-        # Step 1: Install or upgrade Caesar cipher
-        echo -e "${GREEN}Step 1: Installing/upgrading Caesar cipher...${NC}"
+    INSTALLED_VERSION=$(Astute --version) 2>/dev/null
+    if [[ "$INSTALLED_VERSION" != "$Astute_VERSION" ]] || [[ "$1" == "--force" ]]; then
+        # Step 1: Install or upgrade Astute cipher
+        echo -e "${GREEN}Step 1: Installing/upgrading Astute cipher...${NC}"
     else
-        echo -e "${GREEN}$CAESAR_VERSION or higher is already installed.${NC}"
+        echo -e "${GREEN}$Astute_VERSION or higher is already installed.${NC}"
         exit 0
     fi
 fi
@@ -69,27 +69,27 @@ source venv/bin/activate
 echo -e "${GREEN}Installing requirements...${NC}"
 pip install -r cmd-reqs.txt &>/dev/null
 
-# Check if Caesar cipher is already installed and at the required version
-INSTALLED_VERSION=$(caesar --version)
-if [[ "$INSTALLED_VERSION" != "$CAESAR_VERSION" ]] || [[ "$1" == "--force" ]]; then
-    # Step 2: Install or upgrade Caesar cipher
-    echo -e "${GREEN}Step 2: Installing/upgrading Caesar cipher...${NC}"
-    pip install --upgrade caesar==$CAESAR_VERSION &>/dev/null
+# Check if Astute cipher is already installed and at the required version
+INSTALLED_VERSION=$(Astute --version)
+if [[ "$INSTALLED_VERSION" != "$Astute_VERSION" ]] || [[ "$1" == "--force" ]]; then
+    # Step 2: Install or upgrade Astute cipher
+    echo -e "${GREEN}Step 2: Installing/upgrading Astute cipher...${NC}"
+    pip install --upgrade Astute==$Astute_VERSION &>/dev/null
 else
-    echo -e "${GREEN}$CAESAR_VERSION or higher is already installed.${NC}"
+    echo -e "${GREEN}$Astute_VERSION or higher is already installed.${NC}"
 fi
 
 # Step 3: Create the executable
 echo -e "${GREEN}Step 3: Creating the executable...${NC}"
-pyinstaller --onefile caesar.py &>/dev/null
+pyinstaller --onefile Astute.py &>/dev/null
 
 # Step 4: Move the executable to a system path (e.g., /usr/local/bin/)
 echo -e "${GREEN}Step 4: Moving the executable to /usr/local/bin/...${NC}"
-sudo mv dist/caesar /usr/local/bin/ &>/dev/null
+sudo mv dist/Astute /usr/local/bin/ &>/dev/null
 
 # Step 5: Clean up the build files
 echo -e "${GREEN}Step 5: Cleaning up build files...${NC}"
-rm -rf build/ dist/ __pycache__ caesar.spec &>/dev/null
+rm -rf build/ dist/ __pycache__ Astute.spec &>/dev/null
 
 # Deactivate and delete the virtual environment
 echo -e "${GREEN}Deactivating and deleting the virtual environment...${NC}"

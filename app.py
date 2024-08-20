@@ -2,12 +2,12 @@ from fastapi import FastAPI, APIRouter, Depends, HTTPException, status, File, Up
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
-from caesar import caesar_cipher, rot13_cipher, atbash_cipher, crot13
+from astute import caesar_cipher, rot13_cipher, atbash_cipher, crot13
 from uuid import uuid4
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
-    title="Caesar Cipher API",
+    title="Astute Cipher API",
     description="A simple API for Caesar cipher",
     version="1.0.0",
     docs_url="/docs",

@@ -2,8 +2,8 @@ import click
 import codecs
 import os
 
-# Define Astute cipher encryption function
-def Astute_cipher(text, shift, option):
+# Define caesar cipher encryption function
+def caesar_cipher(text, shift, option):
     if option == 'decrypt':
         shift = -shift
     encrypted_text = ""
@@ -46,18 +46,18 @@ def atbash_cipher(text):
 
 def crot13(text, shift, option):
     if option == 'encrypt':
-        res = Astute_cipher(text, shift, option)
+        res = caesar_cipher(text, shift, option)
         return rot13_cipher(res)
-    
+
     elif option == 'decrypt':
-        res = Astute_cipher(text, shift, option)  # Decrypt using Astute cipher with a negative shift
+        res = caesar_cipher(text, shift, option)  # Decrypt using caesar cipher with a negative shift
         return rot13_cipher(res)
 
 
 VERSION = '1.0'
 
 encryption_algorithms = {
-    'Astute': Astute_cipher,
+    'caesar': caesar_cipher,
     'rot13': rot13_cipher,
     'atbash': atbash_cipher,
     'crot13': crot13
@@ -66,41 +66,41 @@ encryption_algorithms = {
 @click.command()
 @click.option('--file', type=click.File('r'), help='Input file to read text from.')
 @click.option('--text', help='Text to encrypt or decrypt.')
-@click.option('--shift', type=int, help='Shift value for Astute cipher (default: 3).', default=3)
+@click.option('--shift', type=int, help='Shift value for caesar cipher (default: 3).', default=3)
 @click.option('--decrypt', is_flag=True, help='Decrypt the text (default is to encrypt).')
 @click.option('--output', type=click.File('w'), help='Output file to write the result to.')
-@click.option('--algorithm', type=click.Choice(['Astute', 'rot13', 'atbash', 'crot13'], case_sensitive=False), default='Astute', help='Encryption algorithm to use (default: Astute cipher).')
+@click.option('--algorithm', type=click.Choice(['caesar', 'rot13', 'atbash', 'crot13'], case_sensitive=False), default='caesar', help='Encryption algorithm to use (default: caesar cipher).')
 @click.version_option(version=VERSION)
 @click.option('--uninstall', is_flag=True, help='Uninstall the program.')
 def main(file, text, shift, decrypt, output, algorithm, uninstall):
     """
     Command-line tool for text encryption and decryption using various algorithms.
 
-    This tool supports multiple encryption algorithms, including Astute cipher,
+    This tool supports multiple encryption algorithms, including caesar cipher,
     ROT13, Atbash cipher, and a custom crot13 algorithm.
 
     Usage examples:
-    - Encrypt text using Astute cipher:
-      $ Astute.py --text "Hello, World!" --shift 3
+    - Encrypt text using caesar cipher:
+      $ caesar.py --text "Hello, World!" --shift 3
 
     - Decrypt text using ROT13:
-      $ Astute.py --text "Uryyb, Jbeyq!" --algorithm rot13 --decrypt
+      $ caesar.py --text "Uryyb, Jbeyq!" --algorithm rot13 --decrypt
 
     - Encrypt text using the custom crot13 algorithm:
-      $ Astute.py --text "Hello, World!" --algorithm crot13 --shift 3
+      $ caesar.py --text "Hello, World!" --algorithm crot13 --shift 3
 
     - Decrypt text using the custom crot13 algorithm:
-      $ Astute.py --text "Uryyb, Jbeyq!" --algorithm crot13 --decrypt --shift 3
+      $ caesar.py --text "Uryyb, Jbeyq!" --algorithm crot13 --decrypt --shift 3
 
     - Encrypt text from a file and save the result to another file:
-      $ Astute.py --file input.txt --output encrypted.txt --shift 5
+      $ caesar.py --file input.txt --output encrypted.txt --shift 5
     """
 
     if uninstall:
         response = click.prompt('Are you sure you want to uninstall the program? (y/n)', type=str, default='n')
         if response.lower() == 'y':
             try:
-                os.remove('/usr/local/bin/Astute')
+                os.remove('/usr/local/bin/caesar')
                 click.echo('Uninstalled successfully.')
             except OSError:
                 click.echo('Only System Administrators can uninstall the program. Run the command with sudo.')
@@ -108,7 +108,7 @@ def main(file, text, shift, decrypt, output, algorithm, uninstall):
             click.echo('Uninstallation aborted.')
         return
 
-    if file and text: 
+    if file and text:
         click.echo("Error: Please provide either '--file' or '--text', not both.")
         return
 
@@ -121,8 +121,8 @@ def main(file, text, shift, decrypt, output, algorithm, uninstall):
         if file:
             input_text = file.read()
 
-        if algorithm == 'Astute':
-            result = Astute_cipher(input_text, shift, 'encrypt' if not decrypt else 'decrypt')
+        if algorithm == 'caesar':
+            result = caesar_cipher(input_text, shift, 'encrypt' if not decrypt else 'decrypt')
         elif algorithm == 'rot13':
             result = rot13_cipher(input_text)
         elif algorithm == 'atbash':
